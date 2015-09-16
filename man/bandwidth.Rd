@@ -7,8 +7,7 @@
 bandwidth(rate = 0)
 }
 \arguments{
-\item{rate}{rate in KB/s
-'}
+\item{rate}{rate in KB/s}
 }
 \description{
 Limit a connection to a maximum number of kilobytes per second.

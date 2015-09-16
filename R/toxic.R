@@ -12,7 +12,7 @@ latency <- function(latency=0, jitter=0) {
 ##' Limit a connection to a maximum number of kilobytes per second.
 ##' @title Bandwidth toxic
 ##' @param rate rate in KB/s
-##' '@export
+##' @export
 bandwidth <- function(rate=0) {
   toxic("bandwidth", list(rate=rate))
 }
