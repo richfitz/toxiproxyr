@@ -1,0 +1,23 @@
+Package: toxiproxyr
+Title: Client for 'toxiproxy'
+Version: 0.1.0
+Authors@R:
+    person(given = "Rich",
+           family = "Last",
+           role = c("aut", "cre"),
+           email = "rich.fitzjohn@gmail.com")
+Description: Create chaotic proxies for services to test behaviour of
+    your clients and servers in the face of unreliable network
+    connections.  Provides a client to the 'toxiproxy' API.
+Imports:
+    R6,
+    httr,
+    jsonlite,
+    processx
+Suggests:
+    testthat,
+    withr
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.1
