@@ -53,14 +53,6 @@ assert_scalar_logical <- function(x, name = deparse(substitute(x))) {
 }
 
 
-assert_absolute_path <- function(path) {
-  if (!is_absolute_path(path)) {
-    stop("Expected an absolute path")
-  }
-  invisible(path)
-}
-
-
 assert_file_exists <- function(path, name = deparse(substitute(path))) {
   assert_scalar_character(path, name)
   if (!file.exists(path)) {
