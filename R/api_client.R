@@ -14,27 +14,28 @@ toxiproxy_api_client <- R6::R6Class(
       self$port <- dat$port
     },
 
-    request = function(verb, path, ...) {
-      toxiproxy_request(verb, self$addr, path, ...)
+    request = function(action, verb, path, ...) {
+      toxiproxy_request(action, verb, self$addr, path, ...)
     },
 
     server_version = function(refresh = FALSE) {
       if (is.null(self$version) || refresh) {
-        self$version <- numeric_version(self$GET("/version"))
+        self$version <- numeric_version(self$GET(
+          "requesting server version", "/version"))
       }
       self$version
     },
 
-    GET = function(path, ...) {
-      self$request(httr::GET, path, ...)
+    GET = function(action, path, ...) {
+      self$request(action, httr::GET, path, ...)
     },
 
-    POST = function(path, ...) {
-      self$request(httr::POST, path, ...)
+    POST = function(action, path, ...) {
+      self$request(action, httr::POST, path, ...)
     },
 
-    DELETE = function(path, ...) {
-      self$request(httr::DELETE, path, ...)
+    DELETE = function(action, path, ...) {
+      self$request(action, httr::DELETE, path, ...)
     }
   ))
 

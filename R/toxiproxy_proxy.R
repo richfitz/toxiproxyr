@@ -20,7 +20,8 @@ toxiproxy_proxy <- R6::R6Class(
     },
 
     describe = function() {
-      private$api_client$GET(private$path)
+      private$api_client$GET(
+        sprintf("fetching proxy '%s'", self$name), private$path)
     },
 
     add = function(type, stream = "downstream", toxicity = 1,
@@ -37,12 +38,15 @@ toxiproxy_proxy <- R6::R6Class(
                    toxicity = toxicity,
                    attributes = toxic_attributes(attributes),
                    name = name)
-      res <- private$api_client$POST(private$path_toxics, body = body)
+      res <- private$api_client$POST(
+        "adding a toxic", private$path_toxics, body = body)
       res$name
     },
 
     list = function() {
-      res <- private$api_client$GET(private$path_toxics)
+      res <- private$api_client$GET(
+        sprintf("listing toxics for proxy '%s'", self$name),
+        private$path_toxics)
       data_frame(
         name = vcapply(res, "[[", "name"),
         type = vcapply(res, "[[", "type"),
@@ -54,13 +58,15 @@ toxiproxy_proxy <- R6::R6Class(
     remove = function(name) {
       assert_scalar_character(name)
       path <- sprintf("%s/%s", private$path_toxics, name)
-      private$api_client$DELETE(path)
+      private$api_client$DELETE(
+        sprintf("removing toxic '%s' from proxy '%s'", name, self$name), path)
     },
 
     info = function(name) {
       assert_scalar_character(name)
       path <- sprintf("%s/%s", private$path_toxics, name)
-      res <- private$api_client$GET(path)
+      res <- private$api_client$GET(
+        sprintf("fetching toxic '%s' from proxy '%s'", name, self$name), path)
       res[c("name", "type", "stream", "toxicity", "attributes")]
     },
 
@@ -68,7 +74,9 @@ toxiproxy_proxy <- R6::R6Class(
       assert_scalar_character(name)
       path <- sprintf("%s/%s", private$path_toxics, name)
       body <- list(attributes = toxic_attributes(attributes))
-      private$api_client$POST(path, body = body)
+      private$api_client$POST(
+        sprintf("updating toxic '%s' for proxy '%s'", name, self$name),
+        path, body = body)
       invisible(NULL)
     },
 
@@ -78,7 +86,8 @@ toxiproxy_proxy <- R6::R6Class(
           check_address(listen %||% 0, private$api_client$host),
         upstream = upstream %&&% check_address(upstream),
         enabled = enabled %&&% assert_scalar_logical(enabled)))
-      private$api_client$POST(private$path, body = body)
+      private$api_client$POST(
+        sprintf("updating proxy '%s'", self$name), private$path, body = body)
       invisible(self)
     }
   ),

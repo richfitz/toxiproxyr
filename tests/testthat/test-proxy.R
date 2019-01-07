@@ -124,3 +124,37 @@ test_that("update upstream", {
   expect_equal(p$upstream, upstream)
   expect_equal(cl$list()$upstream, p$upstream)
 })
+
+
+
+test_that("actions after proxy removal", {
+  srv <- toxiproxy_server()
+  cl <- srv$client()
+  p <- cl$create("self", srv$port)
+  cl$remove("self")
+
+  expect_error(
+    p$describe(),
+    "While fetching proxy 'self', toxiproxy errored",
+    class = "toxiproxy_error")
+  expect_error(
+    p$list(),
+    "While listing toxics for proxy 'self', toxiproxy errored",
+    class = "toxiproxy_error")
+  expect_error(
+    p$remove("tox"),
+    "While removing toxic 'tox' from proxy 'self', toxiproxy errored",
+    class = "toxiproxy_error")
+  expect_error(
+    p$info("tox"),
+    "While fetching toxic 'tox' from proxy 'self', toxiproxy errored",
+    class = "toxiproxy_error")
+  expect_error(
+    p$update_toxic("tox", list(latency = 1)),
+    "While updating toxic 'tox' for proxy 'self', toxiproxy errored",
+    class = "toxiproxy_error")
+  expect_error(
+    p$update_proxy(),
+    "While updating proxy 'self', toxiproxy errored",
+    class = "toxiproxy_error")
+})

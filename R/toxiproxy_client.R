@@ -38,7 +38,8 @@ R6_toxiproxy_client <- R6::R6Class(
     },
 
     list = function() {
-      dat <- private$api_client$GET("/proxies")
+      dat <- private$api_client$GET(
+        "getting the list of proxies", "/proxies")
       ret <- data_frame(
         name = vcapply(dat, "[[", "name"),
         listen = vcapply(dat, "[[", "listen"),
@@ -55,23 +56,26 @@ R6_toxiproxy_client <- R6::R6Class(
         listen = check_address(listen %||% 0, private$api_client$host),
         upstream = check_address(upstream),
         enabled = assert_scalar_logical(enabled))
-      dat <- private$api_client$POST("/proxies", body = body)
+      dat <- private$api_client$POST(
+        sprintf("creating proxy '%s'", name), "/proxies", body = body)
       toxiproxy_proxy$new(private$api_client, dat)
     },
 
     reset = function() {
-      private$api_client$POST("/reset")
+      private$api_client$POST("resetting toxiproxy", "/reset")
     },
 
     get = function(name) {
       path <- paste0("/proxies/", assert_scalar_character(name))
-      dat <- private$api_client$GET(path)
+      dat <- private$api_client$GET(
+        sprintf("fetching proxy '%s'", name), path)
       toxiproxy_proxy$new(private$api_client, dat)
     },
 
-    delete = function(name) {
+    remove = function(name) {
       path <- paste0("/proxies/", assert_scalar_character(name))
-      private$api_client$DELETE(path)
+      private$api_client$DELETE(
+        sprintf("removing proxy '%s'", name), path)
     }
   ))
 

@@ -39,12 +39,12 @@ test_that("get proxy", {
 })
 
 
-test_that("delete proxy", {
+test_that("remove proxy", {
   srv <- toxiproxy_server()
   cl <- srv$client()
   cl$create("self", srv$port)
   d <- cl$list()
-  expect_null(cl$delete("self"))
+  expect_null(cl$remove("self"))
   expect_equal(cl$list(), d[integer(0), ])
 })
 
@@ -81,4 +81,40 @@ test_that("check_address validates strings", {
   expect_error(check_address("localhost", name = "address"),
                "'address' must be in the form '<host>:<port>'",
                fixed = TRUE)
+})
+
+
+test_that("create conflicting proxies", {
+  srv <- toxiproxy_server()
+  cl <- srv$client()
+  p <- cl$create("self", srv$port)
+
+  expect_error(
+    cl$create("self", srv$port + 1),
+    "While creating proxy 'self', toxiproxy errored",
+    class = "toxiproxy_error")
+  expect_error(
+    cl$create("self2", srv$port, srv$port),
+    "While creating proxy 'self2', toxiproxy errored",
+    class = "toxiproxy_error")
+})
+
+
+test_that("get missing proxy", {
+  srv <- toxiproxy_server()
+  cl <- srv$client()
+  expect_error(
+    cl$get("self"),
+    "While fetching proxy 'self', toxiproxy errored",
+    class = "toxiproxy_error")
+})
+
+
+test_that("remove missing proxy", {
+  srv <- toxiproxy_server()
+  cl <- srv$client()
+  expect_error(
+    cl$remove("self"),
+    "While removing proxy 'self', toxiproxy errored",
+    class = "toxiproxy_error")
 })
