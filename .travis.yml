@@ -10,6 +10,5 @@ after_success:
 
 env:
   global:
-    - TOXIPROXYR_SERVER_BIN_PATH=$PWD/.vault
+    - TOXIPROXYR_SERVER_BIN_PATH=$PWD/.toxiproxy
     - TOXIPROXYR_SERVER_INSTALL=true
-    - TOXIPROXYR_SERVER_PORT=18200
