@@ -10,3 +10,17 @@ skip_if_no_internet <- function() {
   }
   testthat::skip("no internet")
 }
+
+
+r6_private <- function(x) {
+  environment(x$initialize)$private
+}
+
+
+ping_self <- function(p) {
+  tryCatch({
+    res <- httr::GET(sprintf("http://%s/version", p$listen))
+    httr::stop_for_status(res)
+    TRUE
+  }, error = function(e) FALSE)
+}

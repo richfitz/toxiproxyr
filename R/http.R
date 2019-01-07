@@ -22,7 +22,9 @@ toxiproxy_client_response <- function(res) {
     stop(toxiproxy_error(code, text, errors))
   }
 
-  if (response_is_json(res)) {
+  if (length(res$content) == 0) {
+    ret <- invisible(NULL)
+  } else if (response_is_json(res)) {
     ret <- response_to_json(res)
   } else {
     ## NOTE: assuming text
@@ -55,8 +57,8 @@ toxiproxy_error <- function(code, text, errors) {
 }
 
 
-prepare_path <- function(path) {
-  assert_scalar_character(path)
+prepare_path <- function(path, name = deparse(substitute(path))) {
+  assert_scalar_character(path, name = name)
   if (!is_absolute_path(path)) {
     path <- paste0("/", path)
   }

@@ -188,7 +188,7 @@ toxiproxy_server_start <- function(bin, port, config, seed) {
     processx::process$new(bin, args, stdout = stdout, stderr = stderr)
   on.exit(process$kill())
 
-  addr <- sprintf("http://127.0.0.1:%d", port)
+  addr <- sprintf("http://localhost:%d", port)
   toxiproxy_server_wait(toxiproxy_api_client$new(addr), process)
   on.exit()
 

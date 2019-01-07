@@ -33,3 +33,12 @@ test_that("free_port: used", {
   srv <- toxiproxy_server()
   expect_false(check_port(srv$port))
 })
+
+
+test_that("download_file", {
+  srv <- toxiproxy_server()
+  url <- sprintf("%s/version", srv$addr)
+  path <- download_file(url, quiet = TRUE)
+  expect_true(file.exists(path))
+  expect_equal(readLines(path, warn = FALSE), as.character(srv$version()))
+})

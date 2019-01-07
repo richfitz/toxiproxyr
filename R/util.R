@@ -56,6 +56,11 @@ check_port <- function(port) {
 }
 
 
+`%&&%` <- function(a, b) {
+  if (is.null(a)) NULL else b
+}
+
+
 is_absolute_path <- function(path) {
   substr(path, 1, 1) == "/"
 }
@@ -63,4 +68,34 @@ is_absolute_path <- function(path) {
 
 squote <- function(x) {
   sprintf("'%s'", x)
+}
+
+
+vlapply <- function(X, FUN, ...) {
+  vapply(X, FUN, logical(1), ...)
+}
+
+
+viapply <- function(X, FUN, ...) {
+  vapply(X, FUN, integer(1), ...)
+}
+
+
+vnapply <- function(X, FUN, ...) {
+  vapply(X, FUN, numeric(1), ...)
+}
+
+
+vcapply <- function(X, FUN, ...) {
+  vapply(X, FUN, character(1), ...)
+}
+
+
+data_frame <- function(...) {
+  data.frame(..., stringsAsFactors = FALSE)
+}
+
+
+drop_null <- function(x) {
+  x[!vlapply(x, is.null)]
 }

@@ -3,10 +3,15 @@ toxiproxy_api_client <- R6::R6Class(
 
   public = list(
     addr = NULL,
+    host = NULL,
+    port = NULL,
     version = NULL,
 
     initialize = function(addr = NULL) {
-      self$addr <- toxiproxy_addr(addr)
+      dat <- toxiproxy_addr(addr)
+      self$addr <- dat$addr
+      self$host <- dat$host
+      self$port <- dat$port
     },
 
     request = function(verb, path, ...) {
@@ -41,9 +46,13 @@ toxiproxy_addr <- function(addr) {
     stop("toxiproxy address not found: perhaps set 'TOXIPROXY_ADDR'",
          call. = FALSE)
   }
-  if (!grepl("^http://.+", addr)) {
-    stop("Expected an http url for toxiproxy addr")
+
+  re <- "^http://(.+):([0-9]+)$"
+  if (!grepl(re, addr)) {
+    stop("Expected an http url for toxiproxy addr in the form http://host:port")
   }
-  ## TODO: assume no trailing slash?
-  addr
+
+  list(addr = addr,
+       host = sub(re, "\\1", addr),
+       port = as.integer(sub(re, "\\2", addr)))
 }
