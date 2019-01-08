@@ -3,7 +3,7 @@
 \name{toxiproxy_server_install}
 \alias{toxiproxy_server_install}
 \alias{toxiproxy_server}
-\title{Control a test vault server}
+\title{Control a test toxiproxy server}
 \usage{
 toxiproxy_server_install(quiet = FALSE, version = "v2.1.3")
 
@@ -19,9 +19,9 @@ toxiproxy_server(config = NULL, seed = NULL,
 
 \item{seed}{Not yet handled}
 
-\item{if_disabled}{Callback function to run if the vault server is
-not enabled.  The default, designed to be used within tests, is
-\code{testthat::skip}.  Alternatively, inspect the
+\item{if_disabled}{Callback function to run if the toxiproxy
+server is not enabled.  The default, designed to be used within
+tests, is \code{testthat::skip}.  Alternatively, inspect the
 \code{$enabled} property of the returned object.}
 }
 \description{

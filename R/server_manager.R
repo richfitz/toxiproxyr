@@ -14,15 +14,15 @@
 ##' care.  It is intended \emph{only} for use in automated testing
 ##' environments.
 ##'
-##' @title Control a test vault server
+##' @title Control a test toxiproxy server
 ##'
 ##' @param config Not yet handled
 ##'
 ##' @param seed Not yet handled
 ##'
-##' @param if_disabled Callback function to run if the vault server is
-##'   not enabled.  The default, designed to be used within tests, is
-##'   \code{testthat::skip}.  Alternatively, inspect the
+##' @param if_disabled Callback function to run if the toxiproxy
+##'   server is not enabled.  The default, designed to be used within
+##'   tests, is \code{testthat::skip}.  Alternatively, inspect the
 ##'   \code{$enabled} property of the returned object.
 ##'
 ##' @export
