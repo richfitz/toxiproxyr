@@ -108,6 +108,20 @@ test_that("update listen", {
   p$listen <- listen
   expect_equal(sub(".+:", "", p$listen), as.character(listen))
   expect_equal(cl$list()$listen, p$listen)
+  expect_equal(p$listen_port, listen)
+})
+
+
+test_that("update listen_port", {
+  srv <- toxiproxy_server()
+  cl <- srv$client()
+  p <- cl$create("self", srv$port, enabled = TRUE)
+  listen <- free_port(srv$port)
+
+  p$listen_port <- listen
+  expect_equal(p$listen_port, listen)
+  expect_equal(sub(".+:", "", p$listen), as.character(listen))
+  expect_equal(cl$list()$listen, p$listen)
 })
 
 
@@ -157,4 +171,39 @@ test_that("actions after proxy removal", {
     p$update_proxy(),
     "While updating proxy 'self', toxiproxy errored",
     class = "toxiproxy_error")
+})
+
+
+test_that("toxics interface", {
+  srv <- toxiproxy_server()
+  cl <- srv$client()
+  p <- cl$create("self", srv$port)
+
+  p$add(latency(10))
+  d <- p$list()
+  expect_equal(d$type, "latency")
+  expect_equal(d$attributes[[1]]$latency, 10)
+  expect_equal(d$attributes[[1]]$jitter, 0)
+})
+
+
+test_that("toxics interface requires empty attributes", {
+  srv <- toxiproxy_server()
+  cl <- srv$client()
+  p <- cl$create("self", srv$port)
+
+  expect_error(
+    p$add(latency(10), attributes = list(jitter = 5)),
+    "'attributes' must be empty when using a toxic object")
+})
+
+
+test_that("with_down temporarily disables proxy", {
+  srv <- toxiproxy_server()
+  cl <- srv$client()
+  p <- cl$create("self", srv$port)
+
+  expect_true(ping_self(p))
+  expect_false(p$with_down(ping_self(p)))
+  expect_true(ping_self(p))
 })

@@ -26,6 +26,14 @@ toxiproxy_proxy <- R6::R6Class(
 
     add = function(type, stream = "downstream", toxicity = 1,
                    attributes = list(), name = NULL) {
+      if (inherits(type, "toxic")) {
+        if (length(attributes) > 0L) {
+          stop("'attributes' must be empty when using a toxic object")
+        }
+        attributes <- type$attributes
+        type <- type$type
+      }
+
       assert_scalar_numeric(toxicity)
       if (toxicity < 0 || toxicity > 1) {
         stop("'toxicity' must lie in the range [0, 1]", call. = FALSE)
@@ -89,6 +97,14 @@ toxiproxy_proxy <- R6::R6Class(
       private$api_client$POST(
         sprintf("updating proxy '%s'", self$name), private$path, body = body)
       invisible(self)
+    },
+
+    with_down = function(expr) {
+      if (self$enabled) {
+        self$update_proxy(enabled = FALSE)
+        on.exit(self$update_proxy(enabled = TRUE))
+      }
+      force(expr)
     }
   ),
 
@@ -98,6 +114,15 @@ toxiproxy_proxy <- R6::R6Class(
         self$describe()$listen
       } else {
         self$update_proxy(listen = value)
+      }
+    },
+
+    listen_port = function(value) {
+      if (missing(value)) {
+        as.integer(sub("^.+:", "", self$describe()$listen))
+      } else {
+        self$update_proxy(
+          listen = sub("[0-9]+$", as.character(value), self$listen))
       }
     },
 
