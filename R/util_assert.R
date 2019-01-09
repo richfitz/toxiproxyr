@@ -1,3 +1,14 @@
+assert_is <- function(x, cl, name = deparse(substitute(x)), what = NULL) {
+  if (!inherits(x, cl)) {
+    if (is.null(what)) {
+      what <- paste("a", paste(cl, collapse = " / "))
+    }
+    stop(sprintf("'%s' must be %s", name, what), call. = FALSE)
+  }
+  invisible(x)
+}
+
+
 assert_scalar <- function(x, name = deparse(substitute(x))) {
   if (length(x) != 1) {
     stop(sprintf("'%s' must be a scalar", name), call. = FALSE)

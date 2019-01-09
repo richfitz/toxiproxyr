@@ -44,7 +44,7 @@ test_that("remove proxy", {
   cl <- srv$client()
   cl$create("self", srv$port)
   d <- cl$list()
-  expect_null(cl$remove("self"))
+  expect_identical(cl$remove("self"), cl)
   expect_equal(cl$list(), d[integer(0), ])
 })
 
@@ -117,4 +117,44 @@ test_that("remove missing proxy", {
     cl$remove("self"),
     "While removing proxy 'self', toxiproxy errored",
     class = "toxiproxy_error")
+})
+
+
+test_that("populate proxies", {
+  srv <- toxiproxy_server()
+  cl <- srv$client()
+  d <- data_frame(name = "self", listen = 0, upstream = srv$port)
+  cl$populate(d)
+  res <- cl$list()
+  expect_equal(nrow(res), 1)
+  expect_equal(res$name, "self")
+  expect_equal(res$upstream, paste(cl$api()$host, srv$port, sep = ":"))
+  expect_true(res$enabled)
+  expect_equal(res$toxics, 0L)
+})
+
+
+test_that("check validate populate proxy data", {
+  expect_error(
+    check_populate_data(data_frame(name = "self")),
+    "Missing required fields in 'data': 'listen', 'upstream'")
+  expect_error(
+    check_populate_data(data_frame(name = 0, upstream = 0, listen = 0)),
+    "'data$name' must be a character", fixed = TRUE)
+
+  d <- data_frame(name = "self", upstream = 8474, listen = 0, other = TRUE)
+  expect_equal(
+    check_populate_data(d, "localhost"),
+    data_frame(name = "self",
+               listen = "localhost:0",
+               upstream = "localhost:8474"))
+
+  d <- data_frame(name = c("a", "b"),
+                  upstream = c(8474, "server:80"),
+                  listen = 0)
+  expect_equal(
+    check_populate_data(d, "localhost"),
+    data_frame(name = c("a", "b"),
+               listen = "localhost:0",
+               upstream = c("localhost:8474", "server:80")))
 })

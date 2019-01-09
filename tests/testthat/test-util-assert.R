@@ -100,3 +100,14 @@ test_that("assert_named", {
   expect_silent(assert_named(setNames(object, c("a", "b", "b")), FALSE, "x"))
   expect_silent(assert_named(setNames(object, c("a", "b", "c")), TRUE, "x"))
 })
+
+
+test_that("assert_is", {
+  object <- NULL
+  expect_error(assert_is(object, "data.frame"), "'object' must be a data.frame")
+
+  expect_error(assert_is(1, "data.frame"), "must be a data.frame")
+  expect_error(assert_is(pi, "data.frame"), "must be a data.frame")
+
+  expect_silent(assert_is(mtcars, "data.frame"))
+})

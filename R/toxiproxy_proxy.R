@@ -58,7 +58,7 @@ toxiproxy_proxy <- R6::R6Class(
                    name = name)
       res <- private$api_client$POST(
         "adding a toxic", private$path_toxics, body = body)
-      res$name
+      invisible(res$name)
     },
 
     list = function() {
@@ -78,6 +78,7 @@ toxiproxy_proxy <- R6::R6Class(
       path <- sprintf("%s/%s", private$path_toxics, name)
       private$api_client$DELETE(
         sprintf("removing toxic '%s' from proxy '%s'", name, self$name), path)
+      invisible(self)
     },
 
     info = function(name) {
@@ -95,7 +96,7 @@ toxiproxy_proxy <- R6::R6Class(
       private$api_client$POST(
         sprintf("updating toxic '%s' for proxy '%s'", name, self$name),
         path, body = body)
-      invisible(NULL)
+      invisible(self)
     },
 
     update_proxy = function(upstream = NULL, listen = NULL, enabled = NULL) {
@@ -106,6 +107,13 @@ toxiproxy_proxy <- R6::R6Class(
         enabled = enabled %&&% assert_scalar_logical(enabled)))
       private$api_client$POST(
         sprintf("updating proxy '%s'", self$name), private$path, body = body)
+      invisible(self)
+    },
+
+    clear = function() {
+      for (nm in self$list()$name) {
+        self$remove(nm)
+      }
       invisible(self)
     },
 

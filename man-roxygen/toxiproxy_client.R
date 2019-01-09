@@ -25,7 +25,7 @@
 ##'     \item{\code{name}:   The name for the proxy
 ##'     }
 ##'
-##'     \item{\code{upstream}:   The address of the service to proxy.  Can be given as a string in the format \code{<host>:<port>} or simply as a port number, in which case the host is assumed to be \code{localhost}.
+##'     \item{\code{upstream}:   The address of the service to proxy.  Can be given as a string in the format \code{<host>:<port>} or simply as a port number, in which case the host is assumed to be \code{localhost} (note that this is interpreted relative to the \emph{server} not the client.
 ##'     }
 ##'
 ##'     \item{\code{listen}:   The address that the proxy should listen on.  Can be given as a either a string in the format \code{<host>:<port>} or simply as a port, in which case the host will be set to the same host as the toxiproxy server (which is almost always what you want!). If omitted, the toxiproxy server will choose a random free port.

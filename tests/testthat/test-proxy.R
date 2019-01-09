@@ -49,7 +49,7 @@ test_that("Remove toxic", {
   cl <- srv$client()
   p <- cl$create("self", srv$port, enabled = TRUE)
   nm <- p$add("latency", attributes = list(latency = 200))
-  expect_null(p$remove(nm))
+  expect_identical(p$remove(nm), p)
   expect_equal(nrow(p$list()), 0)
 })
 
@@ -206,4 +206,16 @@ test_that("with_down temporarily disables proxy", {
   expect_true(ping_self(p))
   expect_false(p$with_down(ping_self(p)))
   expect_true(ping_self(p))
+})
+
+
+test_that("clear proxy", {
+  srv <- toxiproxy_server()
+  cl <- srv$client()
+  p <- cl$create("self", srv$port)
+
+  p$add(latency(200), "upstream")
+  p$add(latency(200), "downstream")
+  p$clear()
+  expect_equal(nrow(p$list()), 0)
 })

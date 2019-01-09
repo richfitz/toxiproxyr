@@ -64,6 +64,7 @@ R6_toxiproxy_client <- R6::R6Class(
 
     reset = function() {
       private$api_client$POST("resetting toxiproxy", "/reset")
+      invisible(self)
     },
 
     get = function(name) {
@@ -77,6 +78,14 @@ R6_toxiproxy_client <- R6::R6Class(
       path <- paste0("/proxies/", assert_scalar_character(name))
       private$api_client$DELETE(
         sprintf("removing proxy '%s'", name), path)
+      invisible(self)
+    },
+
+    populate = function(data) {
+      body <- check_populate_data(data, private$api_client$host)
+      private$api_client$POST(
+        "populating proxies", "/populate", body = body)
+      invisible(self)
     }
   ))
 
@@ -88,10 +97,32 @@ check_address <- function(x, default_host = "localhost",
     x <- sprintf("%s:%s", default_host, x)
   } else {
     assert_scalar_character(x, name = name)
-    if (!grepl("^[^:]+:[0-9]+$", x)) {
+    if (grepl("^[0-9]+$", x)) {
+      x <- sprintf("%s:%s", default_host, x)
+    } else if (!grepl("^[^:]+:[0-9]+$", x)) {
       stop(sprintf("'%s' must be in the form '<host>:<port>'", name),
            call. = FALSE)
     }
   }
   x
+}
+
+
+check_populate_data <- function(data, server_host) {
+  assert_is(data, "data.frame")
+  assert_named(data)
+  required <- c("name", "listen", "upstream")
+  msg <- setdiff(required, names(data))
+  if (length(msg) > 0L) {
+    stop(sprintf("Missing required %s in 'data': %s",
+                 ngettext(length(msg), "field", "fields"),
+                 paste(squote(msg), collapse = ", ")),
+         call. = FALSE)
+  }
+  assert_character(data$name)
+  data$listen <- vcapply(
+    data$listen, check_address, server_host, "data$listen")
+  data$upstream <- vcapply(
+    data$upstream, check_address, name = "data$upstream")
+  data[required]
 }
