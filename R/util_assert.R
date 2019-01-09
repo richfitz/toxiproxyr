@@ -74,6 +74,7 @@ assert_file_exists <- function(path, name = deparse(substitute(path))) {
     stop(sprintf("The path '%s' does not exist (for '%s')", path, name),
          call. = FALSE)
   }
+  invisible(path)
 }
 
 

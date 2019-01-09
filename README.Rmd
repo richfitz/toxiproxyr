@@ -9,7 +9,7 @@
 knitr::opts_chunk$set(error = FALSE)
 ```
 
-`toxiproxy` is an unfathful proxy; it forwards data to and from a service with various "toxic" attributes.  The data might be delayed (simulating a slow network connection), dropping the connection, restricting total bandwidth, and other bits of pollution.  These can be added together.
+[`toxiproxy`](https://github.com/shopify/toxiproxy) is an unfathful proxy; it forwards data to and from a service with various "toxic" attributes.  The data might be delayed (simulating a slow network connection), dropping the connection, restricting total bandwidth, and other bits of pollution.  These can be added together.
 
 ## Target audience and use cases
 

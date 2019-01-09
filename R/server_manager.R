@@ -16,9 +16,13 @@
 ##'
 ##' @title Control a test toxiproxy server
 ##'
-##' @param config Not yet handled
+##' @param config Path to a json configuration, in the same format
+##'   that would be used with the server's \code{$populate} method
+##'   (see \code{\link{toxiproxy_client}}.  This can be used to create
+##'   a set of proxies immediately on startup.
 ##'
-##' @param seed Not yet handled
+##' @param seed Random seed to start the server with - will affect
+##'   stochastic toxics
 ##'
 ##' @param if_disabled Callback function to run if the toxiproxy
 ##'   server is not enabled.  The default, designed to be used within
@@ -180,8 +184,8 @@ toxiproxy_server_wait <- function(cl, process, timeout = 5, poll = 0.05) {
 toxiproxy_server_start <- function(bin, port, config, seed) {
   args <- c("-host", "localhost",
             "-port", port,
-            if (!is.null(config)) c("-config", config),
-            if (!is.null(seed)) c("-seed", seed))
+            if (!is.null(config)) c("-config", assert_file_exists(config)),
+            if (!is.null(seed)) c("-seed", assert_scalar_integer(seed)))
   stdout <- tempfile()
   stderr <- tempfile()
   process <-

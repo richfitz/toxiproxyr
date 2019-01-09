@@ -92,3 +92,22 @@ test_that("version", {
   srv <- toxiproxy_server()
   expect_is(srv$version(), "numeric_version")
 })
+
+
+test_that("populate on startup", {
+  ## Need something to proxy!
+  srv1 <- toxiproxy_server()
+
+  dat <- list(list(name = "self",
+                   listen = "127.0.0.1:22222",
+                   upstream = sprintf("127.0.0.1:%d", srv1$port)))
+  config <- tempfile()
+  jsonlite::write_json(dat, config, auto_unbox = TRUE, pretty = TRUE)
+
+  srv2 <- toxiproxy_server(config)
+  expect_equal(
+    srv2$client()$list(),
+    data_frame(name = "self", listen = "127.0.0.1:22222",
+               upstream = dat[[1]]$upstream,
+               enabled = TRUE, toxics = 0L))
+})

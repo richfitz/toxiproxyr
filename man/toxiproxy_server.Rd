@@ -15,9 +15,13 @@ toxiproxy_server(config = NULL, seed = NULL,
 
 \item{version}{Version of toxiproxy to install}
 
-\item{config}{Not yet handled}
+\item{config}{Path to a json configuration, in the same format
+that would be used with the server's \code{$populate} method
+(see \code{\link{toxiproxy_client}}.  This can be used to create
+a set of proxies immediately on startup.}
 
-\item{seed}{Not yet handled}
+\item{seed}{Random seed to start the server with - will affect
+stochastic toxics}
 
 \item{if_disabled}{Callback function to run if the toxiproxy
 server is not enabled.  The default, designed to be used within
