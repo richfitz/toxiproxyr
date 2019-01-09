@@ -14,7 +14,7 @@ NULL
 ##' @param latency Latency in milliseconds
 ##' @param jitter Time in milliseconds
 ##' @export
-##' @rdname toxics
+##' @rdname toxic
 latency <- function(latency, jitter = 0) {
   toxic("latency",
         latency = assert_scalar_integer(latency),
@@ -26,7 +26,7 @@ latency <- function(latency, jitter = 0) {
 ##' of kilobytes per second.
 ##' @param rate Rate in KB per second
 ##' @export
-##' @rdname toxics
+##' @rdname toxic
 bandwidth <- function(rate) {
   toxic("bandwidth", rate = assert_scalar_integer(rate))
 }
@@ -36,7 +36,7 @@ bandwidth <- function(rate) {
 ##' until delay has elapsed.
 ##' @param delay Time in milliseconds
 ##' @export
-##' @rdname toxics
+##' @rdname toxic
 slow_close <- function(delay) {
   toxic("slow_close", delay = assert_scalar_integer(delay))
 }
@@ -48,7 +48,7 @@ slow_close <- function(delay) {
 ##' is removed.
 ##' @param timeout Time in milliseconds
 ##' @export
-##' @rdname toxics
+##' @rdname toxic
 timeout <- function(timeout) {
   toxic("timeout", timeout = assert_scalar_integer(timeout))
 }
@@ -60,7 +60,7 @@ timeout <- function(timeout) {
 ##' @param size_variation Variation in bytes of an average packet
 ##'   (should be smaller than \code{average_size})
 ##' @export
-##' @rdname toxics
+##' @rdname toxic
 slicer <- function(average_size, size_variation, delay = 0) {
   toxic("slicer",
         average_size = assert_scalar_integer(average_size),
@@ -74,7 +74,7 @@ slicer <- function(average_size, size_variation, delay = 0) {
 ##' @param bytes The number of bytes it should transmit before
 ##'   connection is closed
 ##' @export
-##' @rdname toxics
+##' @rdname toxic
 limit_data <- function(bytes) {
   toxic("limit_data", bytes = assert_scalar_integer(bytes))
 }

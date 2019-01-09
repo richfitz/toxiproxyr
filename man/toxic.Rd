@@ -2,7 +2,45 @@
 % Please edit documentation in R/toxics.R
 \name{toxic}
 \alias{toxic}
+\alias{latency}
+\alias{bandwidth}
+\alias{slow_close}
+\alias{timeout}
+\alias{slicer}
+\alias{limit_data}
 \title{Toxics for use with toxiproxy}
+\usage{
+latency(latency, jitter = 0)
+
+bandwidth(rate)
+
+slow_close(delay)
+
+timeout(timeout)
+
+slicer(average_size, size_variation, delay = 0)
+
+limit_data(bytes)
+}
+\arguments{
+\item{latency}{Latency in milliseconds}
+
+\item{jitter}{Time in milliseconds}
+
+\item{rate}{Rate in KB per second}
+
+\item{delay}{Time in milliseconds}
+
+\item{timeout}{Time in milliseconds}
+
+\item{average_size}{Size in bytes of an average packet}
+
+\item{size_variation}{Variation in bytes of an average packet
+(should be smaller than \code{average_size})}
+
+\item{bytes}{The number of bytes it should transmit before
+connection is closed}
+}
 \description{
 Helper functions for creating toxics for use with toxiproxy.
 These can be passed as the first argument to \code{$add} on a

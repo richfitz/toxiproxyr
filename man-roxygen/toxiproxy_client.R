@@ -1,17 +1,13 @@
 ##' @section Methods:
-##'
-##' \describe{
+##' \cr\describe{
 ##' \item{\code{api}}{
 ##'   Returns an api client object that can be used to directly interact with the toxiproxy server.
-##'
-##'   \emph{Usage:}\cr\code{api()}
+##'   \cr\emph{Usage:}\code{api()}
 ##' }
 ##' \item{\code{server_version}}{
 ##'   Returns the server version as a \code{numeric_version} object.
-##'
-##'   \emph{Usage:}\cr\code{server_version(refresh = FALSE)}
-##'
-##'   \emph{Arguments:}
+##'   \cr\emph{Usage:}\code{server_version(refresh = FALSE)}
+##'   \cr\emph{Arguments:}
 ##'   \itemize{
 ##'     \item{\code{refresh}:   Logical scalar indicating if the value should be refreshed from the server if it has already been retrieved, as it is not expected to change.
 ##'     }
@@ -19,15 +15,12 @@
 ##' }
 ##' \item{\code{list}}{
 ##'   List information about all proxies on this server.  Returns a data.frame.
-##'
-##'   \emph{Usage:}\cr\code{list()}
+##'   \cr\emph{Usage:}\code{list()}
 ##' }
 ##' \item{\code{create}}{
 ##'   Create a new proxy.
-##'
-##'   \emph{Usage:}\cr\code{create(name, upstream, listen = NULL, enabled = TRUE)}
-##'
-##'   \emph{Arguments:}
+##'   \cr\emph{Usage:}\code{create(name, upstream, listen = NULL, enabled = TRUE)}
+##'   \cr\emph{Arguments:}
 ##'   \itemize{
 ##'     \item{\code{name}:   The name for the proxy
 ##'     }
@@ -41,35 +34,28 @@
 ##'     \item{\code{enabled}:   Logical scalar indicating if the proxy should be enabled after creation.
 ##'     }
 ##'   }
-##'
-##'   \emph{Value}:
+##'   \cr\emph{Value}:
 ##'   Returns a \code{\link{toxiproxy_proxy}} object - see the help there for details of methods that can be used with that object.
 ##' }
 ##' \item{\code{reset}}{
 ##'   Enable all proxies and remove all toxics.
-##'
-##'   \emph{Usage:}\cr\code{reset()}
+##'   \cr\emph{Usage:}\code{reset()}
 ##' }
 ##' \item{\code{get}}{
 ##'   Get an existing proxy
-##'
-##'   \emph{Usage:}\cr\code{get(name)}
-##'
-##'   \emph{Arguments:}
+##'   \cr\emph{Usage:}\code{get(name)}
+##'   \cr\emph{Arguments:}
 ##'   \itemize{
 ##'     \item{\code{name}:   The name of the proxy to get
 ##'     }
 ##'   }
-##'
-##'   \emph{Value}:
+##'   \cr\emph{Value}:
 ##'   Returns a \code{\link{toxiproxy_proxy}} object - see the help there for details of methods that can be used with that object.
 ##' }
 ##' \item{\code{remove}}{
 ##'   Remove a proxy
-##'
-##'   \emph{Usage:}\cr\code{remove(name)}
-##'
-##'   \emph{Arguments:}
+##'   \cr\emph{Usage:}\code{remove(name)}
+##'   \cr\emph{Arguments:}
 ##'   \itemize{
 ##'     \item{\code{name}:   The name of the proxy to remove
 ##'     }

@@ -10,8 +10,7 @@ method.  They are R6 methods with methods and fields, which are
 }
 \section{Methods}{
 
-
-\describe{
+\cr\describe{
 \item{\code{name}}{
   The name of the proxy (a string).  This is used in methods \code{$get} and \code{remove} of \code{\link{toxiproxy_client}}. This field is read only.
 }
@@ -29,17 +28,14 @@ method.  They are R6 methods with methods and fields, which are
 }
 \item{\code{describe}}{
   Query for the current information about this proxy.  Returns a named list.
-
-  \emph{Usage:}\cr\code{describe()}
+  \cr\emph{Usage:}\code{describe()}
 }
 \item{\code{add}}{
   Add toxics to the proxy.  Returns the name of the created toxic.
     Use \code{$list())} to see what has been added to the proxy.
-
-  \emph{Usage:}\cr\code{add(type, stream = "downstream", toxicity = 1, attributes = list(),
+  \cr\emph{Usage:}\code{add(type, stream = "downstream", toxicity = 1, attributes = list(),
       name = NULL)}
-
-  \emph{Arguments:}
+  \cr\emph{Arguments:}
   \itemize{
     \item{\code{type}:   Either a \code{\link{toxic}} object (e.g., \code{\link{latency}}) or the name of one as a scalar character.
     }
@@ -59,15 +55,12 @@ method.  They are R6 methods with methods and fields, which are
 }
 \item{\code{list}}{
   List toxics that have been added to the proxy.  This will be returned as a \code{data.frame}.
-
-  \emph{Usage:}\cr\code{list()}
+  \cr\emph{Usage:}\code{list()}
 }
 \item{\code{remove}}{
   Remove a toxic from the proxy.
-
-  \emph{Usage:}\cr\code{remove(name)}
-
-  \emph{Arguments:}
+  \cr\emph{Usage:}\code{remove(name)}
+  \cr\emph{Arguments:}
   \itemize{
     \item{\code{name}:   Name of the toxic to remove - use \code{names($list())} to get a list of names of toxics present for a proxy.
     }
@@ -75,10 +68,8 @@ method.  They are R6 methods with methods and fields, which are
 }
 \item{\code{info}}{
   Get information about a toxic from the proxy by name.  This returns a named list.
-
-  \emph{Usage:}\cr\code{info(name)}
-
-  \emph{Arguments:}
+  \cr\emph{Usage:}\code{info(name)}
+  \cr\emph{Arguments:}
   \itemize{
     \item{\code{name}:   A single string with the name of the toxic to be retrieved.  It is an error to try and get an nonexistant toxic.
     }
@@ -86,10 +77,8 @@ method.  They are R6 methods with methods and fields, which are
 }
 \item{\code{update_toxic}}{
   Update attributes of a toxic
-
-  \emph{Usage:}\cr\code{update_toxic(name, attributes)}
-
-  \emph{Arguments:}
+  \cr\emph{Usage:}\code{update_toxic(name, attributes)}
+  \cr\emph{Arguments:}
   \itemize{
     \item{\code{name}:   Name of the toxic to update.
     }
@@ -100,10 +89,8 @@ method.  They are R6 methods with methods and fields, which are
 }
 \item{\code{update_proxy}}{
   Update attributes of the proxy.  Values not provided will not be modified from their current values.
-
-  \emph{Usage:}\cr\code{update_proxy(upstream = NULL, listen = NULL, enabled = NULL)}
-
-  \emph{Arguments:}
+  \cr\emph{Usage:}\code{update_proxy(upstream = NULL, listen = NULL, enabled = NULL)}
+  \cr\emph{Arguments:}
   \itemize{
     \item{\code{upstream}:   Upstream address in the format \code{<host>:<port>}
     }
@@ -117,10 +104,8 @@ method.  They are R6 methods with methods and fields, which are
 }
 \item{\code{with_down}}{
   Like \code{$with}, this runs an R expression with the proxy temporarily down (so that no traffic can be transmitted or recieved).  The state of the proxy will be restored after the expression has evaluated, even if it throws an error.
-
-  \emph{Usage:}\cr\code{with_down(expr)}
-
-  \emph{Arguments:}
+  \cr\emph{Usage:}\code{with_down(expr)}
+  \cr\emph{Arguments:}
   \itemize{
     \item{\code{expr}:   An R expression that will be run with the proxy disabled.
     }
