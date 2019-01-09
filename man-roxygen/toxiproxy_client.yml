@@ -1,0 +1,57 @@
+api:
+  short: >-
+    Returns an api client object that can be used to directly interact
+    with the toxiproxy server.
+
+server_version:
+  short: >-
+    Returns the server version as a \code{numeric_version} object.
+  params:
+    refresh: >-
+      Logical scalar indicating if the value should be refreshed from
+      the server if it has already been retrieved, as it is not
+      expected to change.
+
+list:
+  short: >-
+    List information about all proxies on this server.  Returns a
+    data.frame.
+
+create:
+  short: >-
+    Create a new proxy.
+  params:
+    name: The name for the proxy
+    upstream: >-
+      The address of the service to proxy.  Can be given as a string
+      in the format \code{<host>:<port>} or simply as a port number,
+      in which case the host is assumed to be \code{localhost}.
+    listen: >-
+      The address that the proxy should listen on.  Can be given as a
+      either a string in the format \code{<host>:<port>} or simply as
+      a port, in which case the host will be set to the same host as
+      the toxiproxy server (which is almost always what you want!).
+      If omitted, the toxiproxy server will choose a random free port.
+    enabled: >-
+      Logical scalar indicating if the proxy should be enabled after
+      creation.
+  value: &toxiproxy_proxy >-
+    Returns a \code{\link{toxiproxy_proxy}} object - see the help
+    there for details of methods that can be used with that object.
+
+reset:
+  short: >-
+    Enable all proxies and remove all toxics.
+
+get:
+  short: >-
+    Get an existing proxy
+  params:
+    name: The name of the proxy to get
+  value: *toxiproxy_proxy
+
+remove:
+  short: >-
+    Remove a proxy
+  params:
+    name: The name of the proxy to remove

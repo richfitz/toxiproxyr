@@ -1,0 +1,117 @@
+name:
+  short: >-
+    The name of the proxy (a string).  This is used in methods
+    \code{$get} and \code{remove} of \code{\link{toxiproxy_client}}.
+    This field is read only.
+
+listen:
+  short: >-
+    The address that the proxied service is available on.  This will
+    be in the form \code{host:port} (e.g., \code{localhost:22222}.
+    The field \code{listen_port} give the port number separately.
+    Assigning to this field will update the listen address of the
+    proxy (equivalent to using \code{$update_proxy}).
+
+listen_port:
+  short: >-
+    The port that the proxied service is available on.  Assigning to
+    this field will update the listen address of the proxy (equivalent
+    to using \code{$update_proxy}), but will retain the current
+    hostname.
+
+upstream:
+  short: >-
+    The address that the upstream service (that is being proxied) is
+    found at.  The toxic proxy forwards traffic here.  This will in
+    the form \code{host:port} (e.g., \code{localhost:80}.  Assigning
+    to this field will update the upstream address of the proxy
+    (equivalent to using \code{$update_proxy}).
+
+enabled:
+  short: >-
+    Logical scalar, indicating if the proxy is enabled (i.e., allowing
+    traffic).  If a proxy is enabled then all toxics on that proxy are
+    enabled.  Assigning to this field enables or disables the proxy
+    (with a value of \code{TRUE} and \code{FALSE} respectively),
+    equivalent to using \code{$update_proxy}.
+
+describe:
+  short: >-
+    Query for the current information about this proxy.  Returns a
+    named list.
+
+add:
+  short: >-
+    Add toxics to the proxy.  Returns the name of the created toxic.
+      Use \code{$list())} to see what has been added to the proxy.
+  params:
+    type: >-
+      Either a \code{\link{toxic}} object (e.g.,
+      \code{\link{latency}}) or the name of one as a scalar character.
+    stream: >-
+      The stream to apply the proxy to.  Must be either
+      \code{"downstream"} (the default) or \code{"upstream"}).
+    toxicity: >-
+      Scalar numeric indicating the \emph{probability} of the proxy
+      being applied to the connection.
+    attributes: >-
+      If \code{type} is a character string, a named list of attributes
+      (see \href{https://github.com/shopify/toxiproxy#toxics}{the
+      toxiproxy documentation}).  If \code{type} is a \code{toxic}
+      object this must be empty.
+    name: >-
+      Name to call the toxic.  If omitted, the toxiproxy server will
+      generate a name automatically.
+
+list:
+  short: >-
+    List toxics that have been added to the proxy.  This will be
+    returned as a \code{data.frame}.
+
+remove:
+  short: >-
+    Remove a toxic from the proxy.
+  params:
+    name: >-
+      Name of the toxic to remove - use \code{names($list())} to get a
+      list of names of toxics present for a proxy.
+
+info:
+  short: >-
+    Get information about a toxic from the proxy by name.  This
+    returns a named list.
+  params:
+    name: >-
+      A single string with the name of the toxic to be retrieved.  It
+      is an error to try and get an nonexistant toxic.
+
+update_toxic:
+  short: >-
+    Update attributes of a toxic
+  params:
+    name: >-
+      Name of the toxic to update.
+    attributes: >-
+      A named list of attributes for the toxic.  Use \code{$info()} to
+      see what is valid for your toxic, or see
+      \href{https://github.com/shopify/toxiproxy#toxics}{the toxiproxy
+      documentation}.
+
+update_proxy:
+  short: >-
+    Update attributes of the proxy.  Values not provided will not be
+    modified from their current values.
+  params:
+    upstream: Upstream address in the format \code{<host>:<port>}
+    listen: Listen address in the format \code{<host>:<port>}
+    enabled: Logical scalar indicating if the proxy should be enabled
+
+with_down:
+  short: >-
+    Like \code{$with}, this runs an R expression with the proxy
+    temporarily down (so that no traffic can be transmitted or
+    recieved).  The state of the proxy will be restored after the
+    expression has evaluated, even if it throws an error.
+  params:
+    expr: >-
+      An R expression that will be run with the proxy disabled.

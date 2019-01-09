@@ -1,3 +1,13 @@
+##' Toxic proxies are created by the \code{$create} method of the
+##' \code{\link{toxiproxy_client}} and returned by the \code{$get}
+##' method.  They are R6 methods with methods and fields, which are
+##'
+##' @template toxiproxy_proxy
+##'
+##' @title Toxiproxy proxy
+##' @name toxiproxy_proxy
+NULL
+
 toxiproxy_proxy <- R6::R6Class(
   "toxiproxy_proxy",
   cloneable = FALSE,

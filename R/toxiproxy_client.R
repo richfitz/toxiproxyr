@@ -9,6 +9,7 @@
 ##'   e.g., \code{http://toxiproxy.example.com:8474}.  If not given, the
 ##'   default is the environment variable \code{TOXIPROXY_ADDR}.
 ##'
+##' @template toxiproxy_client
 ##' @export
 ##' @author Rich FitzJohn
 toxiproxy_client <- function(addr = NULL) {

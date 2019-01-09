@@ -7,6 +7,9 @@ roxygen:
 	@mkdir -p man
 	${RSCRIPT} -e "library(methods); devtools::document()"
 
+autodoc:
+	./scripts/autodoc.R
+
 install:
 	R CMD INSTALL .
 

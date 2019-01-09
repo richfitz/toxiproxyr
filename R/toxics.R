@@ -4,8 +4,8 @@
 ##' arguments.
 ##'
 ##' @title Toxics for use with toxiproxy
-##' @name toxics
-##' @rdname toxics
+##' @name toxic
+##' @rdname toxic
 NULL
 
 ##' The \code{latency} toxic adds a delay to all data going through

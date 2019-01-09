@@ -3,3 +3,5 @@
 ^\.travis\.yml$
 ^README\.Rmd$
 ^TODO\.md$
+^man-roxygen$
+^scripts$
