@@ -1,7 +1,8 @@
-^appveyor\.yml$
 ^Makefile$
-^\.travis\.yml$
 ^README\.Rmd$
 ^TODO\.md$
+^\.travis\.yml$
+^appveyor\.yml$
+^docs$
 ^man-roxygen$
 ^scripts$

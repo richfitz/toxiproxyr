@@ -9,6 +9,8 @@ Authors@R:
 Description: Create chaotic proxies for services to test behaviour of
     your clients and servers in the face of unreliable network
     connections.  Provides a client to the 'toxiproxy' API.
+URL: https://github.com/richfitz/toxiproxyr
+BugReports: https://github.com/richfitz/toxiproxyr/issues
 Imports:
     R6,
     httr,

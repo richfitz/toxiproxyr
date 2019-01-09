@@ -55,7 +55,7 @@ README.md: README.Rmd
 	rm -f $@.bak
 
 pkgdown:
-	Rscript -e "library(methods); pkgdown::build_site()"
+	Rscript -e "options(pkgdown.internet = FALSE); pkgdown::build_site(lazy = TRUE)"
 
 website: pkgdown
 	./scripts/update_web.sh
