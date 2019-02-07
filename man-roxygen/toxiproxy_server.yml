@@ -1,0 +1,23 @@
+port:
+  short: >-
+    Port that the toxiproxy server is running on (readonly integer).
+
+addr:
+  short: >-
+    Address that the toxiproxy server is running on (readonly string,
+    in the forat \code{<host>:<port>}).
+
+version:
+  short: >-
+    Retrieve the version number from the toxiproxy server, as a
+    \code{numeric_version} object.
+
+client:
+  short: >-
+    Create a \code{toxiproxy_client} connected to this server.
+
+kill:
+  short: >-
+    Kill the server - this should not need to be run manually as the
+    server will be killed when the server object goes out of scope and
+    is garbage collected.
